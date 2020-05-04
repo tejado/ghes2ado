@@ -1,0 +1,22 @@
+{
+  "name": "func-sync-trigger",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@octokit/rest": "^17.6.0",
+    "azure-devops-node-api": "^10.1.1"
+  },
+  "devDependencies": {
+    "@azure/functions": "^1.0.2-beta2",
+    "@octokit/types": "^2.12.2",
+    "@types/crypto-js": "^3.1.45",
+    "typescript": "^3.3.3"
+  }
+}
