@@ -92,3 +92,7 @@ bin
 obj
 appsettings.json
 local.settings.json
+
+*.pem
+!mock-cert.pem
+package-lock.json
