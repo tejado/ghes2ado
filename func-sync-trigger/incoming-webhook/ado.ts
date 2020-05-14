@@ -1,6 +1,10 @@
-import * as azdev from "azure-devops-node-api";
+import * as azdev  from "azure-devops-node-api";
 import * as gitclient from "azure-devops-node-api/GitApi"
-import { GitRepository, GitPush,GitCommitRef,GitCommit, GitChange, ItemContent, GitItem, GitRefUpdate } from 'azure-devops-node-api/interfaces/GitInterfaces';
+import { GitRepository, GitPush, GitCommitRef, GitCommit, GitChange, ItemContent, GitItem, GitRefUpdate } from 'azure-devops-node-api/interfaces/GitInterfaces';
+
+/*
+ * thanks to Leo Liu: https://stackoverflow.com/a/59483655
+ */
 
 async function pushFile2Ado(
     orgUrl: string, 
@@ -9,9 +13,10 @@ async function pushFile2Ado(
     file: string, 
     targetFilePath: string, 
     refName: string,
+    commitMessage: string,
     token: string
 ){  
-    let repostories:GitRepository[];
+    let repostories: GitRepository[];
     let authHandler = azdev.getPersonalAccessTokenHandler(token); 
     let connection = new azdev.WebApi(orgUrl, authHandler);
 
@@ -22,7 +27,7 @@ async function pushFile2Ado(
     
     let gitChanges: GitChange[] = [{
         changeType: 2,
-        newContent: {content: file,contentType: 1 }, //0-> RawText = 0, Base64Encoded = 1,
+        newContent: { content: file,contentType: 1 }, //0-> RawText = 0, Base64Encoded = 1,
         item: {
             path: targetFilePath
         }
@@ -39,7 +44,7 @@ async function pushFile2Ado(
         let gitCommitRef:GitCommitRef[] = [
             {
                 changes: gitChanges,
-                comment: 'Add a file'
+                comment: commitMessage
             }
         ];
 
